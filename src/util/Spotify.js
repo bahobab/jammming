@@ -1,4 +1,4 @@
-const CLIENT_ID = 'a73c249bf19e412ab5f0c534503c6632';
+const CLIENT_ID = '';
 const REDIRECT_URI = 'http://localhost:3000/';
 const accessToken = ''; // 77
 const baseAPIURL = 'https://api.spotify.com/v1/';
@@ -23,7 +23,7 @@ const Spotify = { // 76
 
                     return accessToken;
 
-                } else {
+                } else { // 83
                     window.location = `https://accounts.spotify.com/authorize?
                     client_id=${CLIENT_ID}
                     &response_type=token
@@ -34,10 +34,13 @@ const Spotify = { // 76
     },
 
     search(searchTerm) { // 85
-                return fetch(`https://api.spotify.com/v1/search?type=track&q=${searchTerm}`,
-                {headers:{Authorization: `Bearer ${accessToken}`}})
+        Spotify.getAccessToken().then(accessToken =>{
+            console.log('access token ', accessToken);   
+            return fetch(`https://api.spotify.com/v1/search?type=track&q=${searchTerm}`,
+                {headers:{Authorization: `Bearer ${accessToken}`}})})
         .then(response => {
-        return response.json();
+            console.log('response ', response);
+            return response.json();
         }).then(jsonResponse => {
              // 87
              console.log('returned jsonResponse\n', jsonResponse);
