@@ -1,10 +1,11 @@
-const CLIENT_ID = 'a73c249bf19e412ab5f0c534503c6632';
-const REDIRECT_URI = 'http://localhost:3000/';
+const CLIENT_ID = '';
+const REDIRECT_URI = 'http://localhost:3000';
 const accessToken = ''; // 77
-const baseAPIURL = 'https://api.spotify.com/v1/';
+// const baseAPIURL = 'https://api.spotify.com/v1/';
 
 const Spotify = { // 76
     getAccessToken() { // 78
+        console.log('initial access token ', accessToken);
         if (accessToken) {
             return new Promise(resolve => resolve(accessToken));
         }
@@ -13,24 +14,32 @@ const Spotify = { // 76
             .then(response => { 
                 console.log('response from token request', response);
                 const url = window.location.href;
+                console.log('url ', url);
                 if (url.match(/expires_in=([^&]*)/) && url.match(/access_token=([^&]*)/)) {
-                    const expiresIn = response.json().expires_in;
-                    let accessToken = response.json().access_token;
+                    console.log("working")
+                    } else { 
+                    console.log("error")
+                    }
 
-                    window.setTimeout(() => {
-                        accessToken = ''
-                    }, expiresIn * 1000);
-                    window.history.pushState('Access Token', null, '/');
+                // if (url.match(/expires_in=([^&]*)/) && url.match(/access_token=([^&]*)/)) {
+                //     const expiresIn = response.json().expires_in;
+                //     let accessToken = response.json().access_token;
+                //     console.log('WORKING: returned access-token ', accessToken);
+                //     window.setTimeout(() => {
+                //         accessToken = ''
+                //     }, expiresIn * 1000);
+                //     window.history.pushState('Access Token', null, '/');
+                    
+                //     return accessToken;
 
-                    return accessToken;
-
-                } else { // 83
-                    window.location = `https://cors-anywhere.herokuapp.com/https://accounts.spotify.com/authorize?
-                    client_id=${CLIENT_ID}
-                    &response_type=token
-                    &scope=playlist-modify-public
-                    &redirect_uri=${REDIRECT_URI}`
-                }
+                // } else { // 83
+                //     console.log('NOT WORKING: returned access-token ', accessToken);
+                //     window.location = `https://cors-anywhere.herokuapp.com/https://accounts.spotify.com/authorize?
+                //     client_id=${CLIENT_ID}
+                //     &response_type=token
+                //     &scope=playlist-modify-public
+                //     &redirect_uri=${REDIRECT_URI}`
+                // }
             })
     },
 
