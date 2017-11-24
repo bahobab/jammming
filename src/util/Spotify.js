@@ -1,4 +1,4 @@
-const CLIENT_ID = 'a73c249bf19e412ab5f0c534503c6632';
+const CLIENT_ID = '';
 const REDIRECT_URI = 'http://localhost:3000';
 let accessToken; // 77
 // const baseAPIURL = 'https://api.spotify.com/v1/';
@@ -50,24 +50,32 @@ const Spotify = { // 76
     },
 
     savePlaylist(playlistName, URIs) { // 90 91
+        // console.log(playlistName);
+        // console.log(URIs);
+
         if ( !(playlistName&&URIs)) {
             return
         }
-        // let currentAccessToken = window.location.href.match(/access_token=([^&]*)/);
-        // let headers = {
-        //     Authorization: {Bearer: currentAccessToken}
+        let currentAccessToken = window.location.href.match(/access_token=([^&]*)/);
+        // console.log('my access token: ', currentAccessToken[1]);
+        // let headers = headers: {
+        //     Authorization: `Bearer ${currentAccessToken[1]}`
         // };
         let my_ID = '';
-        fetch("https://cors-anywhere.herokuapp.com/https//api/.spotify.com/v1/me")
+        fetch("https//api/.spotify.com/v1/me", {headers: {
+            Authorization: `Bearer ${currentAccessToken[1]}`
+        }})
             .then(profile => {
-                my_ID = profile.json().id;
+                console.log('profile..: ', profile);
+                my_ID = profile.id;
                 return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${my_ID}/playlists`, {headers:{method: 'POST', 'Content-Type': 'application/json', body:{name: playlistName}}})
             })
                 // 94
-        .then(response =>{
-            const playlistID = response.json().id;
-            fetch(`https://api.spotify.com/v1/users/${my_ID}/playlists/${playlistID}/tracks/${URIs}`, {headers:{method: 'POST','Content-Type': 'application/json'} })
-        })
+            .then(response =>{
+                console.log('response...: ', response)
+                const playlistID = response.id;
+                return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${my_ID}/playlists/${playlistID}/tracks/${URIs}`, {headers:{method: 'POST','Content-Type': 'application/json'} })
+            });
     }
 }
 

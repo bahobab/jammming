@@ -32,6 +32,7 @@ class App extends Component {
         }
       ]
     };
+
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
@@ -42,7 +43,11 @@ class App extends Component {
   savePlaylist() {
     const trackURIs = this.state.playlistTracks.map(track => track.uri)
     // return trackURIs;
-    Spotify.savePlaylist(this.state.playlistName, trackURIs); // 95
+    Spotify.savePlaylist(this.state.playlistName, trackURIs)
+    .then(success =>{
+      console.log(success);
+    }).catch(error => console.log(error));
+     // 95
     this.setState({
       playlistName: 'New Playlist',
       searchResults: []
@@ -51,7 +56,7 @@ class App extends Component {
 
   addTrack(newTrack) {
     let exists = !this.state.playlistTracks.some(aTrack => aTrack.id === newTrack.id);
-    if (!exists) {
+    if (exists) {
       let newTrackList = this.state.playlistTracks.concat(newTrack);
       this.setState({
         playlistTracks: newTrackList
@@ -60,23 +65,22 @@ class App extends Component {
   }
 
   removeTrack(trackToRemove) {
-    let newPlaylistTracks = this.state.playlistTracks.filter(track => track.id !== trackToRemove);
+    let newPlaylistTracks = this.state.playlistTracks.filter(track => track.id !== trackToRemove.id);
     this.setState({
       playlistTracks: newPlaylistTracks
     })
   }
 
   updatePlaylistName(name) {
-    this.state.setState({
+    this.setState({
       playlistName: name
     })
+    
   }
 
   search(searchTerm) { //67
-    console.log('Searching.....');
     Spotify.search(searchTerm)
       .then(searchResults => {
-        // console.log(searchResults);
         this.setState({
           searchResults: searchResults
         });
