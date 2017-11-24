@@ -13,8 +13,9 @@ export default class Track extends Component {
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
     }
-    renderAction(isRemoval) { 
-        if (isRemoval) return '-';
+    renderAction() { 
+        // console.log('is removal: ', this.props.isRemoval);
+        if (this.props.isRemoval) return '-';
         else return '+';
     }
 
@@ -27,6 +28,7 @@ export default class Track extends Component {
     }
     
     render() {
+        // console.log('One track...', this.props.track);
         return (
             <div className='Track'>
                 <div className='Track-information'>
@@ -34,7 +36,7 @@ export default class Track extends Component {
                     <p>{this.props.track.artist} | {this.props.track.album}</p>
                 </div>
                 {/* <a className='Track-action' onClick={this.addTrack} onClick={this.removeTrack}>{this.renderAction()}</a> */}
-                <a className='Track-action' onClick={this.addTrack} onClick={this.removeTrack}>{this.renderAction()}</a>
+                <div className='Track-action'><a onClick={this.addTrack} >{this.renderAction()}</a></div>
             </div>
         );
     }
