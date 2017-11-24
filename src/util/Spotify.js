@@ -53,7 +53,7 @@ const Spotify = { // 76
         // console.log(playlistName);
         // console.log(URIs);
 
-        if ( !(playlistName&&URIs)) {
+        if ( !(playlistName && URIs)) {
             return
         }
         let currentAccessToken = window.location.href.match(/access_token=([^&]*)/);
@@ -67,7 +67,7 @@ const Spotify = { // 76
         }})
             .then(profile => {
                 console.log('profile..: ', profile);
-                my_ID = profile.id;
+                my_ID = profile..json().id;
                 return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${my_ID}/playlists`, {headers:{method: 'POST', 'Content-Type': 'application/json', body:{name: playlistName}}})
             })
                 // 94
