@@ -32,7 +32,7 @@ const Spotify = { // 76
         }).then(jsonResponse => {
              // 87
              if (jsonResponse) {
-                // console.log('returned jsonResponse\n', jsonResponse.tracks.items);
+                console.log('returned jsonResponse\n', jsonResponse.tracks.items);
                 let trackResults = jsonResponse.tracks.items.map(track => {
                    return {
                         id: track.id,
@@ -56,18 +56,19 @@ const Spotify = { // 76
         if ( !(playlistName && URIs)) {
             return
         }
-        let currentAccessToken = window.location.href.match(/access_token=([^&]*)/);
+        // let currentAccessToken = window.location.href.match(/access_token=([^&]*)/);
+        const accessToken = Spotify.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken} `};
         // console.log('my access token: ', currentAccessToken[1]);
         // let headers = headers: {
         //     Authorization: `Bearer ${currentAccessToken[1]}`
         // };
         let my_ID = '';
-        fetch("https//api/.spotify.com/v1/me", {headers: {
-            Authorization: `Bearer ${currentAccessToken[1]}`
-        }})
+        return fetch("https//api/.spotify.com/v1/me", {headers: headers})
             .then(profile => {
                 console.log('profile..: ', profile);
-                my_ID = profile..json().id;
+                my_ID = profile.json().id;
+                console.log('my id ', my_ID);
                 return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${my_ID}/playlists`, {headers:{method: 'POST', 'Content-Type': 'application/json', body:{name: playlistName}}})
             })
                 // 94
