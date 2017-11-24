@@ -36,7 +36,7 @@ export default class Track extends Component {
                     <p>{this.props.track.artist} | {this.props.track.album}</p>
                 </div>
                 {/* <a className='Track-action' onClick={this.addTrack} onClick={this.removeTrack}>{this.renderAction()}</a> */}
-                <div className='Track-action'><a onClick={this.addTrack} >{this.renderAction()}</a></div>
+                <div className='Track-action'><a onClick={this.props.isRemoval ? this.removeTrack : this.addTrack} >{this.renderAction()}</a></div>
             </div>
         );
     }
