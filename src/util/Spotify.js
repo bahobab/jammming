@@ -1,4 +1,4 @@
-const CLIENT_ID = 'a73c249bf19e412ab5f0c534503c6632';
+const CLIENT_ID = '';
 const REDIRECT_URI = 'http://localhost:3000';
 let accessToken; // 77
 // const baseAPIURL = 'https://api.spotify.com/v1/';
