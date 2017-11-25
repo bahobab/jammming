@@ -20,12 +20,12 @@ export default class Track extends Component {
     }
 
     addTrack() {
-        console.log('adding... ', this.props.track);
+        // console.log('adding... ', this.props.track);
         this.props.onAdd(this.props.track);
     }
 
     removeTrack() {
-        console.log('removing... ', this.props.track);
+        // console.log('removing... ', this.props.track);
         this.props.onRemove(this.props.track);
     }
     
