@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import './SearchBar.css';
 
 export default class SearchBar extends Component {
@@ -12,11 +11,11 @@ export default class SearchBar extends Component {
         this.handleTermChange = this.handleTermChange.bind(this);
     }
 
-    handleTermChange(event) { //71
+    handleTermChange(event) {
         this.setState({searchTerm: event.target.value});
     }
 
-    search() { //69
+    search() {
         this.props.onSearch(this.state.searchTerm)
     }
     render() {
