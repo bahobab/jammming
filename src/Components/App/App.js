@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import SearchBar from '../SearchBar/SearchBar';
-import SearchResults from '../SearchResults/SearchResults';
+import {SearchBar} from '../SearchBar/SearchBar';
+import {SearchResults} from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 
-import Spotify from '../../util/Spotify';
+import {Spotify} from '../../util/Spotify';
 
 class App extends Component {
   constructor(props) {
@@ -26,15 +26,16 @@ class App extends Component {
   savePlaylist() {
     const trackURIs = this.state.playlistTracks.map(track => track.uri)
     Spotify.savePlaylist(this.state.playlistName, trackURIs)
-    .then(success =>{
+    .then(() =>{
       // console.log('Playlist success', success.json());
-    })
+      this.setState({
+        playlistName: 'New Playlist',
+        playlistTracks: []
+      });
+    });
     // .catch(error => console.log(error));
     
-    this.setState({
-      playlistName: 'New Playlist',
-      searchResults: []
-    })
+    
   }
 
   addTrack(newTrack) {

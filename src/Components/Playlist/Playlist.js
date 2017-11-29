@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Playlist.css';
 import TrackList from '../TrackList/TrackList';
 
-export default class PlayList extends Component {
+class PlayList extends Component {
     constructor(props) {
         super(props);
         
@@ -24,3 +24,5 @@ export default class PlayList extends Component {
         );
     }
 }
+
+export default PlayList;

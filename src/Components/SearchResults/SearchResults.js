@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import './SearchResults.css';
 import TrackList from '../TrackList/TrackList';
 
-export default class SearchResults extends Component {
+class SearchResults extends Component {
     render() {
         return (
             <div className='SearchResults'>
@@ -13,3 +13,5 @@ export default class SearchResults extends Component {
         );
     }
 }
+
+export {SearchResults};

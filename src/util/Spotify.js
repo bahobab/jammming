@@ -1,5 +1,6 @@
-const CLIENT_ID = 'a73c249bf19e412ab5f0c534503c6632';
-const REDIRECT_URI = 'http://localhost:3000';
+const CLIENT_ID = '';
+// const REDIRECT_URI = 'http://localhost:3000';
+const REDIRECT_URI = 'http://rfk.surge.sh';
 let accessToken;
 // const baseAPIURL = 'https://api.spotify.com/v1/';
 
@@ -83,6 +84,6 @@ const Spotify = {
     }
 }
 
-export default Spotify;
+export {Spotify};
 
 // https://github.com/github/fetch#json
