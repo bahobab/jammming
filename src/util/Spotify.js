@@ -1,6 +1,6 @@
 const CLIENT_ID = '';
-// const REDIRECT_URI = 'http://localhost:3000';
-const REDIRECT_URI = 'http://rfk.surge.sh';
+const REDIRECT_URI = 'http://localhost:3000';
+// const REDIRECT_URI = 'http://rfk.surge.sh';
 let accessToken;
 // const baseAPIURL = 'https://api.spotify.com/v1/';
 
@@ -20,6 +20,7 @@ const Spotify = {
             window.history.pushState('Access Token', null, '/');
             return accessToken;
           } else {
+            // message: access token expired...
             const accessUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&scope=playlist-modify-public&redirect_uri=${REDIRECT_URI}`;
             window.location = accessUrl;
           }
@@ -47,6 +48,11 @@ const Spotify = {
              }
              return ([]);
         });
+    },
+
+    playlistNameExists() {
+        // take accessToken, userID, playListName
+        // return playListNames in playLists
     },
 
     savePlaylist(playlistName, URIs) {

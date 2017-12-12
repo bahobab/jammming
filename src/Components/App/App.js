@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Notifications, {notify} from 'react-notify-toast';
 // import logo from './logo.svg';
 import './App.css';
 import {SearchBar} from '../SearchBar/SearchBar';
@@ -12,6 +13,7 @@ class App extends Component {
     super(props);
     this.state = {
       playlistName: 'New Playlist',
+      searchTerm: '',
       searchResults:  [],
       playlistTracks: []
     };
@@ -21,6 +23,7 @@ class App extends Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.updateSearchTerm = this.updateSearchTerm.bind(this);
   }
 
   savePlaylist() {
@@ -28,12 +31,15 @@ class App extends Component {
     Spotify.savePlaylist(this.state.playlistName, trackURIs)
     .then(() =>{
       // console.log('Playlist success', success.json());
+      notify.show('Playlist successfully saved to Spotify...', "success");
       this.setState({
         playlistName: 'New Playlist',
         playlistTracks: []
       });
+    }).catch(error => {
+      // console.log(error.message);
+      // notify.show('Error saving to Spotify...', "error");
     });
-    // .catch(error => console.log(error));
     
     
   }
@@ -62,21 +68,38 @@ class App extends Component {
     
   }
 
-  search(searchTerm) {
-    Spotify.search(searchTerm)
+  updateSearchTerm(searchTerm) {
+    this.setState({
+      searchTerm
+    })
+  }
+
+  search() {
+    Spotify.search(this.state.searchTerm)
       .then(searchResults => {
-        this.setState({
-          searchResults: searchResults
-        });
+        if (searchResults.length !== 0) {
+          this.setState({
+            searchResults: searchResults
+          });
+          this.setState({searchTerm: ''});
+          notify.show('Search completed successfully...', "success");
+        } else {
+          notify.show(`Search completed, but no match found for ${this.state.searchTerm}`, "warning");
+        }
+      }).catch(error => {
+        // let msg = error.message;
+        // notify.show('Unable to complete search...', "error");
+        // console.log(error.message);
       });
   }
 
   render() {
     return (
       <div>
+        <Notifications />
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className='App'>
-          <SearchBar onSearch={this.search}  />
+          <SearchBar onSearch={this.search} onSearchTermChange={this.updateSearchTerm} searchTerm={this.state.searchTerm} />
           <div className='App-playlist'>
             <SearchResults onAdd={this.addTrack} searchResults = {this.state.searchResults}/>
             <Playlist playlistName={this.state.playlistName} onSave={this.savePlaylist} onNameChange={this.updatePlaylistName} onRemove={this.removeTrack} playlistTracks={this.state.playlistTracks} />
